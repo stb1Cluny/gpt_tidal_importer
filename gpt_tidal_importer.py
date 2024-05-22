@@ -8,12 +8,18 @@ def read_secrets(file_path='secrets.txt'):
     secrets = {}
     with open(file_path, 'r') as file:
         for line in file:
-            name, value = line.strip().split('=')
-            secrets[name] = value
+            print(f"Processing line: {line.strip()}")
+            parts = line.strip().split('-')
+            if len(parts) == 2:
+                name, value = parts
+                secrets[name] = value
+            else:
+                print(f"Skipping invalid line: {line.strip()}")
     return secrets
 
 # Read secrets
 secrets = read_secrets()
+print("Secrets loaded:", secrets)
 CLIENT_ID = secrets['CLIENT_ID']
 CLIENT_SECRET = secrets['CLIENT_SECRET']
 REDIRECT_URI = secrets['REDIRECT_URI']

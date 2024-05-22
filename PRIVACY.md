@@ -2,7 +2,7 @@ Privacy Notice
 Last Updated: May 22, 2024
 
 1. Introduction
-Welcome to [Your Application Name]! This Privacy Notice explains how we collect, use, disclose, and safeguard your information when you use our application, [Your Application Name] ("the App"). Please read this privacy notice carefully. If you do not agree with the terms of this privacy notice, please do not access the App.
+Welcome to gpt_tidal_importer! This Privacy Notice explains how we collect, use, disclose, and safeguard your information when you use our application, gpt_tidal_importer ("the App"). Please read this privacy notice carefully. If you do not agree with the terms of this privacy notice, please do not access the App.
 
 2. Information We Collect
 We may collect and use the following types of information in connection with your use of the App:
