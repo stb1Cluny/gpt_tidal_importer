@@ -4,8 +4,9 @@ Tidal requires registered apps to link to a privacy notice which will be added t
 
 To use:
 1. Install requests and requests_oauth2 modules in your Python environment
-2. Put a secrets.txt file in the same dir as gpt_tidal_importer.py using this format:
-    CLIENT_ID=your_client_id_here
-    CLIENT_SECRET=your_client_secret_here
-    REDIRECT_URI=your_redirect_uri_here
-3. Run gpt_tidal_importer.py
+2. Put a secrets.txt file in the same dir as gpt_tidal_importer.py using this format:  
+CLIENT_ID=your_client_id_here  
+CLIENT_SECRET=your_client_secret_here  
+REDIRECT_URI=your_redirect_uri_here
+
+4. Run gpt_tidal_importer.py
