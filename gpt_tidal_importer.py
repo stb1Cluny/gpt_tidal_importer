@@ -3,10 +3,20 @@ from requests_oauthlib import OAuth2Session
 from oauthlib.oauth2 import BackendApplicationClient
 import webbrowser
 
-# Replace these with your actual client ID and client secret
-CLIENT_ID = 'iRWgn61j5iY8qDAr'
-CLIENT_SECRET = 'fWxyW1XGENt6Pv6i9UX6SqNSxszyUcOxO5zf3ArxKtc='
-REDIRECT_URI = 'YOUR_REDIRECT_URI'
+# Function to read secrets from secrets.txt
+def read_secrets(file_path='secrets.txt'):
+    secrets = {}
+    with open(file_path, 'r') as file:
+        for line in file:
+            name, value = line.strip().split('=')
+            secrets[name] = value
+    return secrets
+
+# Read secrets
+secrets = read_secrets()
+CLIENT_ID = secrets['CLIENT_ID']
+CLIENT_SECRET = secrets['CLIENT_SECRET']
+REDIRECT_URI = secrets['REDIRECT_URI']
 
 # Tidal OAuth endpoints
 AUTHORIZATION_BASE_URL = 'https://auth.tidal.com/v1/oauth2/authorize'
@@ -35,6 +45,10 @@ SONGS = [
     ("An Mhaighdean Mhara", "Clannad")
 ]
 
+def log_response(response):
+    print("Status Code:", response.status_code)
+    print("Response Body:", response.json())
+
 # Step 1: Redirect user to Tidal for authorization
 oauth = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI)
 authorization_url, state = oauth.authorization_url(AUTHORIZATION_BASE_URL)
@@ -46,11 +60,15 @@ webbrowser.open(authorization_url)
 redirect_response = input('Paste the full redirect URL here: ')
 
 # Step 3: Fetch the access token
-token = oauth.fetch_token(
-    TOKEN_URL,
-    authorization_response=redirect_response,
-    client_secret=CLIENT_SECRET
-)
+try:
+    token = oauth.fetch_token(
+        TOKEN_URL,
+        authorization_response=redirect_response,
+        client_secret=CLIENT_SECRET
+    )
+except Exception as e:
+    print("Error fetching token:", str(e))
+    exit()
 
 # Step 4: Use the access token to access the Tidal API
 BASE_URL = 'https://api.tidal.com/v1/'
@@ -66,6 +84,7 @@ def create_playlist():
         'type': 'PLAYLIST'
     }
     response = requests.post(url, headers=headers, json=data)
+    log_response(response)
     response.raise_for_status()
     return response.json()['uuid']
 
@@ -79,6 +98,7 @@ def search_track(title, artist):
         'limit': 1
     }
     response = requests.get(url, headers=headers, params=params)
+    log_response(response)
     response.raise_for_status()
     results = response.json()['items']
     if results:
@@ -94,6 +114,7 @@ def add_tracks_to_playlist(playlist_id, track_ids):
         'trackIds': ','.join(map(str, track_ids))
     }
     response = requests.post(url, headers=headers, json=data)
+    log_response(response)
     response.raise_for_status()
 
 def main():
