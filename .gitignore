@@ -1,2 +1,5 @@
 # secrets #
 secrets.txt
+
+# unit tests #
+*_unit_test.py
