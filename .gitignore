@@ -1,5 +1,7 @@
 # secrets #
-*secret*
+secrets.json
+secrets_OLD.txt
+*secrets.*
 
 # unit tests #
 *_unit_test.py
